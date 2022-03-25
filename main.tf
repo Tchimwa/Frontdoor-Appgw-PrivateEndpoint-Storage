@@ -49,10 +49,10 @@ resource "azurerm_subnet" "pe" {
 }
 
 resource "azurerm_subnet" "bastion" {
-  name                 = "bst-sbnt"
+  name                 = "AzureBastionSubnet"
   virtual_network_name = azurerm_virtual_network.vnet.name
   resource_group_name  = azurerm_virtual_network.vnet.resource_group_name
-  address_prefixes     = ["20.100.2.0/24"]
+  address_prefixes     = ["20.100.3.0/24"]
 
 }
 
@@ -237,7 +237,6 @@ resource "azurerm_storage_account" "appgw-sto" {
   account_tier              = "Standard"
   enable_https_traffic_only = true
   allow_blob_public_access  = true
-  large_file_share_enabled  = true
 }
 
 resource "azurerm_subnet_network_security_group_association" "pe-assoc" {
