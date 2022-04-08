@@ -15,6 +15,7 @@ This lab consists of:
 
 - A Front door
 - An Application Gateway
+- A VNET
 - A Storage account
 - SSL certificate
 - Private Endpoint
