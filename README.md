@@ -6,3 +6,15 @@ While waiting for a certificate from a well-known CA to implement the Front Door
 
 - **Storage URL:** <https://appgwblobstonetdata2022.blob.core.windows.net/media/cloud-automation-logo.png>
 - **AppGW URL:** <https://data.ced-sougang.com/media/cloud-automation-logo.png>
+
+# Architecture
+
+![Architecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/main/images/Architecture.png)
+
+This lab consists of:
+
+- A Front door
+- An Application Gateway
+- A Storage account
+- SSL certificate
+- Private Endpoint
