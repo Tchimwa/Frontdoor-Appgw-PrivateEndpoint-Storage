@@ -9,7 +9,7 @@ While waiting for a certificate from a well-known CA to implement the Front Door
 
 # Architecture
 
-![Architecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/main/images/Architecture.png)
+![Architecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/Architecture.png)
 
 This lab consists of:
 
