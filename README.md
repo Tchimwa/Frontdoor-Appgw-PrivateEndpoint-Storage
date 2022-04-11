@@ -31,7 +31,7 @@ terraform plan
 terraform apply
 ```
 
-## Storage account
+### Storage account
 
 Limit access to your storage account publicly and only allow the subnet hosting the AppGW and your public IP for the storage account management. With this set up, access will only be allowed to the AppGW. This  can be done by accessing the ***Networking*** tab on the left panel of the storage account page.
 
@@ -49,7 +49,7 @@ Private endpoint DNS configuration :
 
 ![pednsconf](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/pednsconf.png)
 
-## Application Gateway
+### Application Gateway
 
 When it comes to the AppGW configuration, some of the configuration here will depends on your own flavors. I chose to have a **Multisite** type listener just in case I would like to add more backend targets in the future, but as of now we only one hostname which is "**data.ced-sougang.com**" and of course we are doing HTTPS so Port 443. I would like to mention that ven the "**Basic**" type should have worked in this case scenario!
 
@@ -64,13 +64,13 @@ Now, the custom probe use on the HTTP settings is quite interesting due to the f
 - From the public access, you will be receiving an HTTP error response 400 as it is shown below from the browser Dev tools
 
     ![DevToolError](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/DevToolError.png)
-    
+
 - If you choose to have a private frontend IP on the AppGW, you will be receiving a 409 HTTPS response instead of the 400
 
 Based on those 2 response codes, we can set up or custom probe to match with them so the requests can forwarded to the Storage account when they come in.
 
    ![CustomProbe](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/CustomProbe.png)
-    
+
 As result, we have the result below since the HTTP error codes are expected. Mine is showing 400 because I do have a public frontend IP configuration on my AppGW.
 
    ![ProbeResult](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/ProbeResult.png)
@@ -102,7 +102,7 @@ A connection troubleshoot on the storage account FQDN from the AppGW confirms th
 
 ![ConnectionTB](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/ConnectionTB.png)
 
-## Front Door configuration
+### Front Door configuration
 
 A Front Door classic is the Tier used in this first configuration. Add the backend pool with a full path to a file available in the blob for the Health Probe to be successful. AFD doesn't support any other response beside the 200 OK for a successful probe. There is no way to customized the matching code as we do with the AppGW.
 
@@ -166,8 +166,62 @@ Date: Mon, 11 Apr 2022 17:45:33 GMT
 
 ```
 
+## Using the New Azure Front Door
+
 The next point will be to use the new Azure Front Door to expose the same storage account using the Private link and getting rid of the Application Gateway.
+
+New AFD URL:  <https://newlink.ced-sougang.com/media/cloud-automation-logo.png>
 
 ![NewAFDArchitecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/NewAFDArchitecture.png)
 
-Stay tuned !!!
+Following the link below, I was able to connect my storage account to the Azure Front Door Premium (Tier offering the Private Link) using an Azure Azure Private endpoint.
+
+Public doc: <https://docs.microsoft.com/en-us/azure/private-link/tutorial-private-endpoint-storage-portal>
+
+Key points with the new Azure Front Door:
+
+- The endpoint is created while you are creating a route
+
+![Route](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/Route.png)
+
+- The usual Backend Pool from the classic AFD is replaced by **Origin Group** and the backend target by **Origin**
+
+**Origin:**
+
+![Origin](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/Origin.png)
+
+- The Private endpoint is created and managed by the AFD. The only thing you need to do is to approve it on the storage account side once it is created. Supported origin types are Azure Blobs, App services, Internal Load Balancers as of now.
+
+![newpe](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/newpe.png)
+
+- Finally the domain validation when you choose the Azure managed certificate is done via TXT. Also, the custom domain has to be associated to the default endpoint and route created earlier.
+
+![DomainValidation](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/DomainValidation.png)
+
+As result we have our storage account accessed securely using the new Azure Front Door.
+
+```typescript
+C:\Users\tcsougan>curl -I https://newlink.ced-sougang.com/media/cloud-automation-logo.png
+HTTP/1.1 200 OK
+Content-Length: 40080
+Content-Type: image/png
+Content-MD5: HGv9IhxMvhtR+IS7npkLog==
+Last-Modified: Mon, 28 Mar 2022 04:31:55 GMT
+Accept-Ranges: bytes
+ETag: 0x8DA1073E3E197DE
+x-ms-request-id: b2605b13-501e-005c-58e5-4d7998000000
+x-ms-version: 2009-09-19
+x-ms-lease-status: unlocked
+x-ms-blob-type: BlockBlob
+x-azure-ref: 0RpRUYgAAAAAj+68ipG+yRrJpyjdCnTJvQVRBRURHRTEyMjAAOTQ2ZWRmNjQtMmNmMC00MDlhLWI1NDYtY2IyOGE0MWUyN2E4
+X-Cache: CONFIG_NOCACHE
+x-fd-int-roxy-upstream-error-info: NoError
+X-Cache: CONFIG_NOCACHE
+Date: Mon, 11 Apr 2022 20:49:10 GMT
+```
+
+## Conclusion
+
+The new Azure Front Door has certainly changed the game as it is now capable of being connected to some PaaS services on a few regions, and also offered more features than the classic. As we just saw, the new AFD by accessing the blob via Private endpoint enables the Cx to get rid of the Application Gateway and probably reduces the latency from the customer to the blob files. However, the classic AFD is still available in those regions where the AFD isn't yet supported.
+
+More about the new AFD [here](https://azure.microsoft.com/en-us/blog/introducing-the-new-azure-front-door-reimagined-for-modern-apps-and-content/).
