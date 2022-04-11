@@ -4,8 +4,8 @@ output "storage-account" {
 
 }
 
-#output "pe-fqdn" {
+output "pe-fqdn" {
 
-#  value = azurerm_private_dns_a_record.appgw-a-record.fqdn
+  value = azurerm_private_dns_a_record.appgw-a-record.fqdn
   
-#}
+}

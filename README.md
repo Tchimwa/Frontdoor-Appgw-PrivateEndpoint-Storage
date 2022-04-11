@@ -2,9 +2,9 @@
 
 Storage account being the backend of the AppGW via Private endpoint, and the AppGW will be the endpoint of the Frontdoor.
 
-Interesting case scenario with the storage account. Since it is not providing a website but files, we need to have the entire link of the file we are trying to access here. 
+Interesting case scenario with the storage account. Since it is not providing a website but files, we need to have the entire link of the file we are trying to access here.
 
-Below we have the URL from each resources from the storage account to the Frontdoor. A SSL certificate ws used on the AppGW and AFD managed certificate was use on the Frontfdoor to enable the custom domain. 
+Below we have the URL from each resources from the storage account to the Frontdoor. A SSL certificate ws used on the AppGW and AFD managed certificate was use on the Frontdoor to enable the custom domain.
 
 - **Storage URL:** <https://appgwblobstonetdata2022.blob.core.windows.net/media/cloud-automation-logo.png>
 - **AppGW URL:** <https://data.ced-sougang.com/media/cloud-automation-logo.png>
@@ -24,6 +24,7 @@ This lab consists of:
 - Private Endpoint
 
 Enabling the frontdoor custom domain:
+
 ```TypeScript
 az network front-door frontend-endpoint enable-https --front-door-name appgwsto-afd
                                                      --name media.ced-sougang.com
