@@ -341,7 +341,7 @@ resource "azurerm_frontdoor" "afd" {
     health_probe_name = "afd-probe"
     name = "afd-pool"
     backend {
-      host_header = ""
+      host_header = "data.ced-sougang.com"
       address = "data.ced-sougang.com"
       http_port = 80
       https_port = 443      
