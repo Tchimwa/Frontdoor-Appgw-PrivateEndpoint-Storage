@@ -4,7 +4,7 @@ Storage account being the backend of the AppGW via Private endpoint, and the App
 
 Interesting case scenario with the storage account. Since it is not providing a website but files, we need to have the entire link of the file we are trying to access here.
 
-Below we have the URL from each resources from the storage account to the Frontdoor. A SSL certificate ws used on the AppGW and AFD managed certificate was use on the Frontdoor to enable the custom domain.
+Below we have the URL from each resources from the storage account to the Frontdoor. A SSL certificate was used on the AppGW and a AFD managed certificate was used on the Frontdoor to enable the custom domain.
 
 - **Storage URL:** <https://appgwblobstonetdata2022.blob.core.windows.net/media/cloud-automation-logo.png>
 - **AppGW URL:** <https://data.ced-sougang.com/media/cloud-automation-logo.png>
