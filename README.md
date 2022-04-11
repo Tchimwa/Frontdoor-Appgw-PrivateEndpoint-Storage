@@ -1,11 +1,14 @@
 # Frontdoor-Appgw-Private-Endpoint-Storage
 
-Test - Storage account being the backend of the AppGW, and the AppGW will be the endpoint of the Frontdoor.
+Storage account being the backend of the AppGW via Private endpoint, and the AppGW will be the endpoint of the Frontdoor.
 
-While waiting for a certificate from a well-known CA to implement the Front Door part, we have conducted the first part using a self-signed certificate.
+Interesting case scenario with the storage account. Since it is not providing a website but files, we need to have the entire link of the file we are trying to access here. 
+
+Below we have the URL from each resources from the storage account to the Frontdoor. A SSL certificate ws used on the AppGW and AFD managed certificate was use on the Frontfdoor to enable the custom domain. 
 
 - **Storage URL:** <https://appgwblobstonetdata2022.blob.core.windows.net/media/cloud-automation-logo.png>
 - **AppGW URL:** <https://data.ced-sougang.com/media/cloud-automation-logo.png>
+- **Frontdoor URL:** <https://media.ced-sougang.com/media/cloud-automation-logo.png>
 
 # Architecture
 
@@ -19,3 +22,12 @@ This lab consists of:
 - A Storage account
 - SSL certificate
 - Private Endpoint
+
+Enabling the frontdoor custom domain:
+```TypeScript
+az network front-door frontend-endpoint enable-https --front-door-name appgwsto-afd
+                                                     --name media.ced-sougang.com
+                                                     --resource-group appgwsto-rg
+                                                     --certificate-source FrontDoor
+                                                     --minimum-tls-version 1.2
+```
