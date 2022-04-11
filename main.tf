@@ -298,7 +298,7 @@ resource "azurerm_private_dns_a_record" "appgw-a-record" {
   ttl = 300
   records = [ azurerm_private_endpoint.pe.private_service_connection[0].private_ip_address ]  
 }
-/* IN Construction, waiting for a well'know certficate to test it since I have been doing the above with a self-signed certificate.
+
 resource "azurerm_frontdoor" "afd" {
   name = "appgwsto-afd"
   resource_group_name = azurerm_resource_group.main.name
