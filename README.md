@@ -172,7 +172,7 @@ The next point will be to use the new Azure Front Door to expose the same storag
 
 New AFD URL:  <https://newlink.ced-sougang.com/media/cloud-automation-logo.png>
 
-![NewAFDArchitecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/NewAFDArchitecture.png)
+![NewAFDArchitecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/NewAFD.png)
 
 Following the link below, I was able to connect my storage account to the Azure Front Door Premium (Tier offering the Private Link) using an Azure Azure Private endpoint.
 
