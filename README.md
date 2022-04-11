@@ -16,6 +16,7 @@ To complete this lab, there is no much needs beside of what is listed below:
 - SSL certificate for the AppGW and the Front Door custom domain(optional, we can use the Azure managed certificate here) from a well-known CA
 
 Architecture will be as simple as it is shown below:
+
 ![Architecture](https://github.com/Tchimwa/Frontdoor-Appgw-Storage/blob/main/images/Architecture.png)
 
 ## Deployment and configuration
