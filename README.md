@@ -124,7 +124,7 @@ az network front-door frontend-endpoint enable-https --front-door-name appgwsto-
 
 On the afd-rule routing rule which is the principal rule, the Accepted protocol will be "HTTPS Only" as well as the forwarding protocol. I also configured a second rule to redirect HTTP to HTTPS as well.
 
-```azurecli
+```TypeScript
 az network front-door routing-rule create --front-door-name appgwsto-afd --frontend-endpoints media-ced-sougang-com 
                                                                                 --custom-host media.ced-sougang.com 
                                                                                 --name afd-rule-http
