@@ -1,4 +1,4 @@
-# Leveraging Azure Front Door to expose some blob containers globally : Azure Front Door Classic, New Azure Front Door Premium
+# Leveraging Azure Front Door to expose some blob containers globally : Case scenarios with the Azure Front Door Classic and the new Azure Front Door Premium
 
 In this lab, we will show how to configure an Azure Front Door and an application Gateway in front of a storage account using Private Endpoint, to better expose the storage containers globally and secure access to them with custom domains.
 
