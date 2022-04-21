@@ -5,7 +5,7 @@ In this lab, we will show how to configure an Azure Front Door and an applicatio
 ## Introduction
 
 Azure Front Door delivers your content using the global and local POPs distributed around the world close to ends users. Usually Front Door needs public VIP or a publicly available DNS name to route the traffic to, so it supports most of the PaaS services. This scenario is special as the customer here is looking to limit access to his storage account using the Private endpoint, but also would like the content of his blob containers to be available globally. The solution here will be to have an Application gateway in from of the storage account using the private endpoint, then use the AppGW as endpoint of the Front Door to make the blobs available publicly.
-When I was working on this lab, the new Azure Front Door wasn't available yet as it currently supports Private Link on a few regions. We'll study the case with the AppGW + Front Door first, then we will work on the case scenario with the Front Door + PrivateLInk to the storage account directly.
+We'll study the case with the AppGW + Front Door first, then we will work on the case scenario with the New Front Door Premium + PrivateLInk to the storage account directly.
 
 ## Prerequisites and architecture
 
